@@ -49,47 +49,13 @@
         header {
             padding: 2.5rem 1.5rem 1.25rem;
             background: linear-gradient(120deg, rgba(53, 89, 224, 0.85), rgba(99, 102, 241, 0.95));
-            color: white;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0 0 0.75rem;
-            font-size: clamp(2rem, 5vw, 2.75rem);
-            font-weight: 700;
-        }
-
-        header p {
-            margin: 0 auto;
-            max-width: 600px;
-            font-size: clamp(1rem, 4vw, 1.1rem);
-            line-height: 1.6;
+            margin-bottom: 2rem;
         }
 
         main {
             width: min(1120px, 92vw);
-            margin: -3.5rem auto 3rem;
+            margin: -2.5rem auto 3rem;
             flex: 1 0 auto;
-        }
-
-        .card {
-            background: var(--color-card);
-            border-radius: 18px;
-            border: 1px solid var(--color-border);
-            padding: clamp(1.5rem, 2vw, 2rem);
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
-        }
-
-        h2 {
-            margin-top: 0;
-            font-size: clamp(1.6rem, 3vw, 2rem);
-            font-weight: 700;
-        }
-
-        .level-selector {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
         }
 
         .level-option {
@@ -281,6 +247,10 @@
                 padding: 2rem 1rem 1rem;
             }
 
+            main {
+                margin: 1.5rem auto 2rem;
+            }
+
             .card {
                 padding: 1.25rem;
             }
@@ -323,153 +293,12 @@
                     <input type="radio" name="level" value="avanzado" aria-label="Nivel avanzado">
                 </label>
             </div>
-        </section>
 
-        <section class="card" aria-labelledby="preguntas" style="margin-top: 2.5rem;">
-            <h2 id="preguntas">Preguntas</h2>
-            <p>
-                Responde cada situación seleccionando la opción que mejor represente tu criterio. Después, el sistema te mostrará qué conceptos conviene reforzar.
-            </p>
-            <div class="question-list">
-                <article class="question-card">
-                    <h3>1. Participación democrática</h3>
-                    <p>Un municipio convoca a su comunidad para decidir cómo invertir un fondo para obras públicas. ¿Cuál es la mejor forma de garantizar una decisión democrática?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q1" value="a">
-                            Organizar una votación abierta donde todas las personas puedan opinar y votar.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q1" value="b">
-                            Dejar que las autoridades decidan sin consultar a la ciudadanía para evitar conflictos.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q1" value="c">
-                            Elegir a un grupo reducido de representantes sin informar al resto.
-                        </label>
-                    </div>
-                </article>
-
-                <article class="question-card">
-                    <h3>2. Economía cotidiana</h3>
-                    <p>El gobierno evalúa bajar impuestos a productos básicos durante una crisis económica. ¿Qué indicador ayuda a entender si la medida beneficia a las familias?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q2" value="a">
-                            El índice de precios al consumidor (inflación) de los productos esenciales.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q2" value="b">
-                            El color del billete de mayor denominación.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q2" value="c">
-                            El número de anuncios publicitarios sobre la medida.
-                        </label>
-                    </div>
-                </article>
-
-                <article class="question-card">
-                    <h3>3. Pensamiento crítico</h3>
-                    <p>Circula en redes un gráfico que muestra datos sin citar la fuente. ¿Cuál es la actitud más responsable antes de compartirlo?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q3" value="a">
-                            Buscar la fuente original y verificar si la información es confiable.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q3" value="b">
-                            Compartirlo porque coincide con tus opiniones.
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q3" value="c">
-                            Ignorarlo porque la información pública nunca es verdadera.
-                        </label>
-                    </div>
-                </article>
+            <div class="actions" style="margin-top:1rem;">
+                <button class="primary" type="button" id="go-level">Ir al nivel</button>
+                <button class="primary" type="button" id="go-reforzar">Reforzar conocimientos</button>
             </div>
-
-            <div class="actions">
-                <button class="primary" type="button">Evaluar respuestas</button>
-                <button class="secondary" type="button">Reiniciar</button>
-            </div>
-        </section>
-
-        <section class="card feedback" aria-labelledby="retroalimentacion" style="margin-top: 2.5rem;">
-            <h2 id="retroalimentacion">Conceptos a reforzar</h2>
-            <p>
-                Aquí aparecerán los temas donde puedes profundizar, con explicaciones sencillas y ejemplos de buenas y malas prácticas.
-            </p>
-
-            <article class="concept-card" aria-labelledby="concepto-democracia">
-                <div class="concept-title">
-                    <strong id="concepto-democracia">Democracia participativa</strong>
-                    <div class="concept-tags">
-                        <span class="tag">Nivel básico</span>
-                        <span class="tag">Participación</span>
-                    </div>
-                </div>
-                <p>
-                    La democracia participativa reconoce que la ciudadanía tiene derecho a intervenir de manera directa en las decisiones públicas, complementando la representación tradicional.
-                </p>
-                <div class="examples">
-                    <div>
-                        <h4>Bien aplicado</h4>
-                        <p class="example">El municipio organiza presupuestos participativos, donde las vecinas y vecinos votan los proyectos que consideran prioritarios.</p>
-                    </div>
-                    <div>
-                        <h4>Mal aplicado</h4>
-                        <p class="example bad">Se anuncian las obras una vez adjudicadas, sin informar ni consultar a la población afectada.</p>
-                    </div>
-                </div>
-            </article>
-
-            <article class="concept-card" aria-labelledby="concepto-economia">
-                <div class="concept-title">
-                    <strong id="concepto-economia">Indicadores económicos básicos</strong>
-                    <div class="concept-tags">
-                        <span class="tag">Nivel intermedio</span>
-                        <span class="tag">Economía</span>
-                    </div>
-                </div>
-                <p>
-                    Los indicadores permiten medir cómo evoluciona la economía y evaluar si las medidas públicas logran su objetivo, especialmente en el costo de vida de las familias.
-                </p>
-                <div class="examples">
-                    <div>
-                        <h4>Bien aplicado</h4>
-                        <p class="example">Comparar la inflación de alimentos antes y después de una política para medir su impacto real en la canasta básica.</p>
-                    </div>
-                    <div>
-                        <h4>Mal aplicado</h4>
-                        <p class="example bad">Concluir que la medida fue exitosa porque se difundió en muchos medios, sin revisar datos sobre precios o salarios.</p>
-                    </div>
-                </div>
-            </article>
-
-            <article class="concept-card" aria-labelledby="concepto-pensamiento">
-                <div class="concept-title">
-                    <strong id="concepto-pensamiento">Verificación de información</strong>
-                    <div class="concept-tags">
-                        <span class="tag">Nivel avanzado</span>
-                        <span class="tag">Pensamiento crítico</span>
-                    </div>
-                </div>
-                <p>
-                    Contrastar la información con fuentes confiables ayuda a evitar la difusión de noticias falsas y fortalece el debate público.
-                </p>
-                <div class="examples">
-                    <div>
-                        <h4>Bien aplicado</h4>
-                        <p class="example">Revisar si el gráfico proviene de una institución reconocida o verificar los datos en informes oficiales.</p>
-                    </div>
-                    <div>
-                        <h4>Mal aplicado</h4>
-                        <p class="example bad">Compartir el gráfico sin confirmar su origen porque coincide con la postura de tu grupo político.</p>
-                    </div>
-                </div>
-            </article>
-        </section>
+            
     </main>
 
     <footer>
@@ -478,6 +307,53 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        (function(){
+            const goBtn = document.getElementById('go-level');
+            const clearBtn = document.getElementById('clear-level');
+            const goReforzarBtn = document.getElementById('go-reforzar');
+
+            function getSelectedLevel(){
+                const selected = document.querySelector('input[name="level"]:checked');
+                return selected ? selected.value : null;
+            }
+
+            function levelToFile(level){
+                // Rutas del servidor Flask
+                const map = {
+                    'basico': '/nivel_basico',
+                    'intermedio': '/nivel_intermedio',
+                    'avanzado': '/nivel_avanzado'
+                };
+                return map[level] || null;
+            }
+
+            goBtn && goBtn.addEventListener('click', function(){
+                const level = getSelectedLevel();
+                if(!level){
+                    const first = document.querySelector('input[name="level"]');
+                    first && first.focus();
+                    alert('Por favor selecciona un nivel antes de continuar.');
+                    return;
+                }
+                const file = levelToFile(level);
+                if(file){
+                    window.location.href = file;
+                } else {
+                    alert('No se encontró la página para el nivel seleccionado.');
+                }
+            });
+
+            clearBtn && clearBtn.addEventListener('click', function(){
+                const checked = document.querySelector('input[name="level"]:checked');
+                if(checked) checked.checked = false;
+            });
+
+            // Manejar navegación a la sección de reforzar conocimientos (ruta Flask)
+            goReforzarBtn && goReforzarBtn.addEventListener('click', function(){
+                window.location.href = '/conceptos_reforzar';
+            });
+        })();
     </script>
 </body>
 </html>
