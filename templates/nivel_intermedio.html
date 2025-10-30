@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel intermedio · Votar con Conocimiento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light dark;
+            --color-bg: #f4f6fb;
+            --color-card: #ffffff;
+            --color-text: #1f2a44;
+            --color-muted: #6b7a99;
+            --color-accent: #3559e0;
+            --color-border: rgba(31, 42, 68, 0.12);
+            font-size: 16px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #0f172a;
+                --color-card: #141f35;
+                --color-text: #e2e8f0;
+                --color-muted: #94a3b8;
+                --color-accent: #818cf8;
+                --color-border: rgba(148, 163, 184, 0.16);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 2.5rem 1.5rem 2rem;
+            background: linear-gradient(120deg, rgba(53, 89, 224, 0.85), rgba(99, 102, 241, 0.95));
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(2rem, 5vw, 2.6rem);
+        }
+
+        header p {
+            margin: 0 auto;
+            max-width: 680px;
+            line-height: 1.6;
+        }
+
+        main {
+            width: min(960px, 92vw);
+            margin: -2.5rem auto 3rem;
+            flex: 1 0 auto;
+        }
+
+        .card {
+            background: var(--color-card);
+            border-radius: 18px;
+            border: 1px solid var(--color-border);
+            padding: clamp(1.75rem, 3vw, 2.25rem);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        .question-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .question {
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            background: rgba(53, 89, 224, 0.04);
+        }
+
+        .question h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .choices {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        label.choice {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: rgba(53, 89, 224, 0.08);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        label.choice:hover {
+            border-color: rgba(53, 89, 224, 0.35);
+            background: rgba(53, 89, 224, 0.16);
+        }
+
+        label.choice input {
+            margin-top: 0.2rem;
+            accent-color: var(--color-accent);
+        }
+
+        .actions {
+            margin-top: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 0.85rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn.primary {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+        }
+
+        footer {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 720px) {
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nivel intermedio</h1>
+        <p>Explora cómo las instituciones, la economía y las políticas públicas influyen en la vida cotidiana.</p>
+    </header>
+
+    <main>
+        <section class="card" aria-labelledby="preguntas-intermedio">
+            <div class="question-list" id="preguntas-intermedio">
+                <article class="question">
+                    <h2>1. Presupuesto nacional</h2>
+                    <p>En Chile, la Ley de Presupuestos se debate cada año entre el Poder Ejecutivo y el Congreso. ¿Por qué es clave que el parlamento analice el proyecto enviado por el Ministerio de Hacienda?</p>
+                    <div class="choices">
+                        <label class="choice">
+                            <input type="radio" name="q1" value="a">
+                            <span>Porque permite controlar el gasto público y asegurar que los fondos respondan a prioridades nacionales.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q1" value="b">
+                            <span>Porque reemplaza la participación ciudadana en las elecciones.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q1" value="c">
+                            <span>Porque evita que se publiquen los datos económicos al finalizar el año.</span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="question">
+                    <h2>2. Inflación e ingresos</h2>
+                    <p>Durante 2022 el Instituto Nacional de Estadística y Censos (INDEC) publicó que la inflación anual superó el 90% en Argentina. ¿Cómo utilizan los sindicatos esta información al negociar paritarias?</p>
+                    <div class="choices">
+                        <label class="choice">
+                            <input type="radio" name="q2" value="a">
+                            <span>Plantean aumentos salariales que compensen la suba de precios para mantener el poder adquisitivo.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q2" value="b">
+                            <span>Desconocen el índice oficial y proponen reducciones salariales automáticas.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q2" value="c">
+                            <span>Solo consideran el número de menciones en redes sociales sobre la inflación.</span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="question">
+                    <h2>3. Transparencia institucional</h2>
+                    <p>En 2016 México promulgó la Ley General de Transparencia y Acceso a la Información Pública. ¿Qué herramienta concreta ofrece a la ciudadanía?</p>
+                    <div class="choices">
+                        <label class="choice">
+                            <input type="radio" name="q3" value="a">
+                            <span>Solicitar datos oficiales a cualquier organismo público y recibir respuesta en plazos establecidos.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q3" value="b">
+                            <span>Votar directamente las leyes sin representantes.</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="q3" value="c">
+                            <span>Obtener beneficios económicos sin trámites administrativos.</span>
+                        </label>
+                    </div>
+                </article>
+            </div>
+
+            <div class="actions">
+                <button class="btn primary" type="button">Evaluar respuestas</button>
+                <a class="btn secondary" href="index.html">Cambiar nivel</a>
+                <a class="btn secondary" href="conceptos_reforzar.html">Ver conceptos a reforzar</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © <span id="year"></span> Votar con Conocimiento.
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

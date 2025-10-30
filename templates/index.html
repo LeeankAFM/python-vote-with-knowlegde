@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votar con Conocimiento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light dark;
+            --color-bg: #f4f6fb;
+            --color-card: #ffffff;
+            --color-text: #1f2a44;
+            --color-muted: #6b7a99;
+            --color-accent: #3559e0;
+            --color-accent-soft: rgba(53, 89, 224, 0.12);
+            --color-border: rgba(31, 42, 68, 0.12);
+            font-size: 16px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #0f172a;
+                --color-card: #141f35;
+                --color-text: #e2e8f0;
+                --color-muted: #94a3b8;
+                --color-accent: #818cf8;
+                --color-accent-soft: rgba(129, 140, 248, 0.16);
+                --color-border: rgba(148, 163, 184, 0.16);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 3rem 1.5rem 2.25rem;
+            background: linear-gradient(120deg, rgba(53, 89, 224, 0.85), rgba(99, 102, 241, 0.95));
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 1rem;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 0 auto;
+            max-width: 640px;
+            font-size: clamp(1rem, 3.8vw, 1.1rem);
+            line-height: 1.6;
+        }
+
+        main {
+            width: min(720px, 92vw);
+            margin: -2.5rem auto 3rem;
+        }
+
+        .card {
+            background: var(--color-card);
+            border-radius: 18px;
+            border: 1px solid var(--color-border);
+            padding: clamp(1.75rem, 4vw, 2.25rem);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        h2 {
+            margin: 0 0 1rem;
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            font-weight: 700;
+        }
+
+        .description {
+            margin: 0 0 2rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+        }
+
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .level-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--color-border);
+            background: rgba(53, 89, 224, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .level-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 32px rgba(15, 23, 42, 0.14);
+        }
+
+        .level-option strong {
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .level-option span {
+            display: block;
+            margin-top: 0.35rem;
+            color: var(--color-muted);
+            font-size: 0.95rem;
+        }
+
+        .actions {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 0.85rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+        }
+
+        footer {
+            margin: auto 0 2rem;
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 720px) {
+            header {
+                padding: 2.5rem 1rem 1.75rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Votar con Conocimiento</h1>
+        <p>
+            Un recorrido educativo para comprender mejor los principios de la democracia, las instituciones y la toma de decisiones informadas.
+            Responde el test y recibe retroalimentación clara sobre los conceptos que puedes fortalecer.
+        </p>
+    </header>
+
+    <main>
+        <section class="card" aria-labelledby="niveles">
+            <h2 id="niveles">Selecciona tu nivel</h2>
+            <p class="description">Elige el nivel que mejor represente tu familiaridad con los temas cívicos para comenzar el recorrido.</p>
+            <form id="level-form">
+                <label class="level-option">
+                    <div>
+                        <strong>Nivel básico</strong>
+                        <span>Conceptos esenciales sobre ciudadanía y democracia.</span>
+                    </div>
+                    <input type="radio" name="level" value="basico" aria-label="Nivel básico">
+                </label>
+                <label class="level-option">
+                    <div>
+                        <strong>Nivel intermedio</strong>
+                        <span>Profundiza en economía, instituciones y participación.</span>
+                    </div>
+                    <input type="radio" name="level" value="intermedio" aria-label="Nivel intermedio">
+                </label>
+                <label class="level-option">
+                    <div>
+                        <strong>Nivel avanzado</strong>
+                        <span>Analiza pensamiento crítico, políticas públicas y debate informado.</span>
+                    </div>
+                    <input type="radio" name="level" value="avanzado" aria-label="Nivel avanzado">
+                </label>
+                <div class="actions">
+                    <button type="submit">Comenzar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        © <span id="year"></span> Votar con Conocimiento. Construyendo ciudadanía informada.
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        document.getElementById('level-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const selected = this.querySelector('input[name="level"]:checked');
+            if (!selected) {
+                alert('Selecciona un nivel para continuar.');
+                return;
+            }
+
+            const routes = {
+                basico: 'nivel_basico.html',
+                intermedio: 'nivel_intermedio.html',
+                avanzado: 'nivel_avanzado.html'
+            };
+
+            window.location.href = routes[selected.value];
+        });
+    </script>
+</body>
+</html>
