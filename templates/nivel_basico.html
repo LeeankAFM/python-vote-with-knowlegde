@@ -1,255 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nivel básico · Votar con Conocimiento</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        color-scheme: light dark;
+        --color-bg: #f4f6fb;
+        --color-card: #ffffff;
+        --color-text: #1f2a44;
+        --color-muted: #6b7a99;
+        --color-accent: #3559e0;
+        --color-border: rgba(31, 42, 68, 0.12);
+        font-size: 16px;
+      }
+
+      @media (prefers-color-scheme: dark) {
         :root {
-            color-scheme: light dark;
-            --color-bg: #f4f6fb;
-            --color-card: #ffffff;
-            --color-text: #1f2a44;
-            --color-muted: #6b7a99;
-            --color-accent: #3559e0;
-            --color-border: rgba(31, 42, 68, 0.12);
-            font-size: 16px;
+          --color-bg: #0f172a;
+          --color-card: #141f35;
+          --color-text: #e2e8f0;
+          --color-muted: #94a3b8;
+          --color-accent: #818cf8;
+          --color-border: rgba(148, 163, 184, 0.16);
         }
+      }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --color-bg: #0f172a;
-                --color-card: #141f35;
-                --color-text: #e2e8f0;
-                --color-muted: #94a3b8;
-                --color-accent: #818cf8;
-                --color-border: rgba(148, 163, 184, 0.16);
-            }
-        }
+      * {
+        box-sizing: border-box;
+      }
 
-        * {
-            box-sizing: border-box;
-        }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+      }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            display: flex;
-            flex-direction: column;
-        }
+      header {
+        padding: 2.5rem 1.5rem 2rem;
+        background: linear-gradient(
+          120deg,
+          rgba(53, 89, 224, 0.85),
+          rgba(99, 102, 241, 0.95)
+        );
+        color: white;
+        text-align: center;
+      }
 
-        header {
-            padding: 2.5rem 1.5rem 2rem;
-            background: linear-gradient(120deg, rgba(53, 89, 224, 0.85), rgba(99, 102, 241, 0.95));
-            color: white;
-            text-align: center;
-        }
+      header h1 {
+        margin: 0 0 0.5rem;
+        font-size: clamp(2rem, 5vw, 2.6rem);
+      }
 
-        header h1 {
-            margin: 0 0 0.5rem;
-            font-size: clamp(2rem, 5vw, 2.6rem);
-        }
+      header p {
+        margin: 0 auto;
+        max-width: 680px;
+        line-height: 1.6;
+      }
 
-        header p {
-            margin: 0 auto;
-            max-width: 680px;
-            line-height: 1.6;
-        }
+      main {
+        width: min(960px, 92vw);
+        margin: 2.5rem auto 3rem;
+        flex: 1 0 auto;
+      }
 
-        main {
-            width: min(960px, 92vw);
-            margin: -2.5rem auto 3rem;
-            flex: 1 0 auto;
-        }
+      .card {
+        background: var(--color-card);
+        border-radius: 18px;
+        border: 1px solid var(--color-border);
+        padding: clamp(1.75rem, 3vw, 2.25rem);
+        box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+      }
 
+      .question-list {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .question {
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--color-border);
+        background: rgba(53, 89, 224, 0.04);
+      }
+
+      .question h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.3rem;
+      }
+
+      .choices {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      label.choice {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: rgba(53, 89, 224, 0.08);
+        cursor: pointer;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+      }
+
+      label.choice:hover {
+        border-color: rgba(53, 89, 224, 0.35);
+        background: rgba(53, 89, 224, 0.16);
+      }
+
+      label.choice input {
+        margin-top: 0.2rem;
+        accent-color: var(--color-accent);
+      }
+
+      .actions {
+        margin-top: 2.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.85rem 1.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn.primary {
+        background: var(--color-accent);
+        color: white;
+        box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
+      }
+
+      .btn.secondary {
+        background: transparent;
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+      }
+
+      footer {
+        padding: 2rem 1.5rem;
+        text-align: center;
+        color: var(--color-muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 720px) {
         .card {
-            background: var(--color-card);
-            border-radius: 18px;
-            border: 1px solid var(--color-border);
-            padding: clamp(1.75rem, 3vw, 2.25rem);
-            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+          padding: 1.5rem;
         }
-
-        .question-list {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .question {
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--color-border);
-            background: rgba(53, 89, 224, 0.04);
-        }
-
-        .question h2 {
-            margin: 0 0 0.75rem;
-            font-size: 1.3rem;
-        }
-
-        .choices {
-            display: grid;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        label.choice {
-            display: flex;
-            gap: 0.75rem;
-            align-items: flex-start;
-            padding: 0.9rem 1rem;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            background: rgba(53, 89, 224, 0.08);
-            cursor: pointer;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
-        }
-
-        label.choice:hover {
-            border-color: rgba(53, 89, 224, 0.35);
-            background: rgba(53, 89, 224, 0.16);
-        }
-
-        label.choice input {
-            margin-top: 0.2rem;
-            accent-color: var(--color-accent);
-        }
-
-        .actions {
-            margin-top: 2.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 999px;
-            padding: 0.85rem 1.75rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn.primary {
-            background: var(--color-accent);
-            color: white;
-            box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
-        }
-
-        .btn.secondary {
-            background: transparent;
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-        }
-
-        footer {
-            padding: 2rem 1.5rem;
-            text-align: center;
-            color: var(--color-muted);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 720px) {
-            .card {
-                padding: 1.5rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Nivel básico</h1>
-        <p>Refuerza los fundamentos de la ciudadanía: democracia, derechos y participación cotidiana.</p>
+      <h1>Nivel básico</h1>
+      <p>
+        Refuerza los fundamentos de la ciudadanía: democracia, derechos y
+        participación cotidiana.
+      </p>
     </header>
 
     <main>
-        <section class="card" aria-labelledby="preguntas-basico">
-            <div class="question-list" id="preguntas-basico">
-                <article class="question">
-                    <h2>1. Sufragio universal</h2>
-                    <p>En Argentina, desde 1912 la Ley Sáenz Peña estableció el voto secreto, universal y obligatorio para varones. ¿Qué principio democrático se consolida cuando en 1947 la Ley 13.010 extendió este derecho a las mujeres?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q1" value="a">
-                            <span>La igualdad política, porque amplía la participación ciudadana sin discriminación de género.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q1" value="b">
-                            <span>La eficiencia del Estado, ya que reduce el costo de las elecciones.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q1" value="c">
-                            <span>La delegación de responsabilidades solo en representantes masculinos.</span>
-                        </label>
-                    </div>
-                </article>
-
-                <article class="question">
-                    <h2>2. Separación de poderes</h2>
-                    <p>En 2001 la Corte Suprema de Justicia argentina declaró inconstitucional una ley del Congreso. ¿Qué función democrática cumple el Poder Judicial en este caso?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q2" value="a">
-                            <span>Controlar que las leyes respeten la Constitución y los derechos de la ciudadanía.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q2" value="b">
-                            <span>Reemplazar a los legisladores en la redacción de nuevas leyes.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q2" value="c">
-                            <span>Promover campañas electorales para los partidos políticos.</span>
-                        </label>
-                    </div>
-                </article>
-
-                <article class="question">
-                    <h2>3. Participación ciudadana</h2>
-                    <p>En Montevideo, Uruguay, existe desde 1990 un sistema de presupuesto participativo donde los vecinos votan proyectos barriales. ¿Cuál es el beneficio principal de este mecanismo?</p>
-                    <div class="choices">
-                        <label class="choice">
-                            <input type="radio" name="q3" value="a">
-                            <span>La comunidad decide en qué se invierten los recursos y fortalece la transparencia.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q3" value="b">
-                            <span>Las autoridades ya no tienen que rendir cuentas por el dinero público.</span>
-                        </label>
-                        <label class="choice">
-                            <input type="radio" name="q3" value="c">
-                            <span>Los proyectos se eligen solo por sorteo sin explicar los criterios.</span>
-                        </label>
-                    </div>
-                </article>
+      <section class="card" aria-labelledby="preguntas-basico">
+        <div class="question-list" id="preguntas-basico">
+          <article class="question">
+            <h2>1. Sufragio universal</h2>
+            <p>
+              En Argentina, desde 1912 la Ley Sáenz Peña estableció el voto
+              secreto, universal y obligatorio para varones. ¿Qué principio
+              democrático se consolida cuando en 1947 la Ley 13.010 extendió
+              este derecho a las mujeres?
+            </p>
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="q1" value="a" />
+                <span
+                  >La igualdad política, porque amplía la participación
+                  ciudadana sin discriminación de género.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q1" value="b" />
+                <span
+                  >La eficiencia del Estado, ya que reduce el costo de las
+                  elecciones.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q1" value="c" />
+                <span
+                  >La delegación de responsabilidades solo en representantes
+                  masculinos.</span
+                >
+              </label>
             </div>
+          </article>
 
-            <div class="actions">
-                <button class="btn primary" type="button">Evaluar respuestas</button>
-                <a class="btn secondary" href="index.html">Cambiar nivel</a>
-                <a class="btn secondary" href="conceptos_reforzar.html">Ver conceptos a reforzar</a>
+          <article class="question">
+            <h2>2. Separación de poderes</h2>
+            <p>
+              En 2001 la Corte Suprema de Justicia argentina declaró
+              inconstitucional una ley del Congreso. ¿Qué función democrática
+              cumple el Poder Judicial en este caso?
+            </p>
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="q2" value="a" />
+                <span
+                  >Controlar que las leyes respeten la Constitución y los
+                  derechos de la ciudadanía.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q2" value="b" />
+                <span
+                  >Reemplazar a los legisladores en la redacción de nuevas
+                  leyes.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q2" value="c" />
+                <span
+                  >Promover campañas electorales para los partidos
+                  políticos.</span
+                >
+              </label>
             </div>
-        </section>
+          </article>
+
+          <article class="question">
+            <h2>3. Participación ciudadana</h2>
+            <p>
+              En Montevideo, Uruguay, existe desde 1990 un sistema de
+              presupuesto participativo donde los vecinos votan proyectos
+              barriales. ¿Cuál es el beneficio principal de este mecanismo?
+            </p>
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="q3" value="a" />
+                <span
+                  >La comunidad decide en qué se invierten los recursos y
+                  fortalece la transparencia.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q3" value="b" />
+                <span
+                  >Las autoridades ya no tienen que rendir cuentas por el dinero
+                  público.</span
+                >
+              </label>
+              <label class="choice">
+                <input type="radio" name="q3" value="c" />
+                <span
+                  >Los proyectos se eligen solo por sorteo sin explicar los
+                  criterios.</span
+                >
+              </label>
+            </div>
+          </article>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="button">Evaluar respuestas</button>
+          <a class="btn secondary" href="/">Cambiar nivel</a>
+          <a class="btn secondary" href="/conceptos_reforzar"
+            >Ver conceptos a reforzar</a
+          >
+        </div>
+      </section>
     </main>
 
-    <footer>
-        © <span id="year"></span> Votar con Conocimiento.
-    </footer>
+    <footer>© <span id="year"></span> Votar con Conocimiento.</footer>
 
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
-</body>
+  </body>
 </html>
