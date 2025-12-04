@@ -1,33 +1,127 @@
-from flask import Flask, render_template
+import os
+from flask import Flask, render_template, request
+from appwrite.client import Client
+from appwrite.services.databases import Databases
+from appwrite.id import ID
+from dotenv import load_dotenv
+from datetime import datetime
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+load_dotenv()
 
+app = Flask(__name__)
+
+# --- CONFIGURACIÓN APPWRITE ---
+client = Client()
+client.set_endpoint(os.getenv('APPWRITE_ENDPOINT'))
+client.set_project(os.getenv('APPWRITE_PROJECT_ID'))
+client.set_key(os.getenv('APPWRITE_API_KEY'))
+
+databases = Databases(client)
+
+DB_ID = os.getenv('APPWRITE_DB_ID')
+COLL_PREGUNTAS = os.getenv('APPWRITE_COLLECTION_BASICO_ID')
+COLL_PUNTAJES = os.getenv('APPWRITE_COLLECTION_PUNTAJES_ID')
+COLL_CONCEPTOS = os.getenv('APPWRITE_COLLECTION_CONCEPTOS_ID')
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
-@app.route('/nivel_basico')
+@app.route('/nivel_basico', methods=['GET', 'POST'])
 def nivel_basico():
-    return render_template('nivel_basico.html')
+    # 1. Traer preguntas de la DB
+    try:
+        result = databases.list_documents(
+            database_id=DB_ID, 
+            collection_id=COLL_PREGUNTAS,
+            queries=[] 
+        )
+        preguntas_db = []
+        for doc in result['documents']:
+            preguntas_db.append({
+                "id": doc['id_pregunta'],
+                "pregunta": doc['pregunta'],
+                "opciones": doc['opciones'],
+                "correcta": doc['correcta']
+            })
+    except Exception as e:
+        print(f"Error Appwrite: {e}")
+        return "Error de conexión con la base de datos."
 
+    # 2. Procesar respuestas
+    if request.method == 'POST':
+        puntaje = 0
+        respuestas_usuario = request.form
+        nickname = respuestas_usuario.get('nickname', 'Anónimo') # Obtener apodo
+        
+        resultados_detalle = []
+        
+        for p in preguntas_db:
+            respuesta_dada = respuestas_usuario.get(p['id'])
+            es_correcta = (respuesta_dada == p['correcta'])
+            
+            if es_correcta:
+                puntaje += 1
+            
+            resultados_detalle.append({
+                "pregunta": p['pregunta'],
+                "correcta": p['correcta'],
+                "dada": respuesta_dada,
+                "es_correcta": es_correcta
+            })
 
-@app.route('/nivel_intermedio')
-def nivel_intermedio():
-    return render_template('nivel_intermedio.html')
+        # 3. Guardar el puntaje en Appwrite (Historial)
+        try:
+            databases.create_document(
+                database_id=DB_ID,
+                collection_id=COLL_PUNTAJES,
+                document_id=ID.unique(),
+                data={
+                    "nickname": nickname,
+                    "puntaje": puntaje,
+                    "nivel": "basico",
+                    "fecha": datetime.now().isoformat()
+                }
+            )
+        except Exception as e:
+            print(f"No se pudo guardar el puntaje: {e}")
+            # No detenemos la app, solo avisamos en consola
 
+        # 4. Mostrar resultados
+        return render_template('resultados.html', 
+                               nivel="Nivel Básico",
+                               nickname=nickname,  # Pasamos el apodo al template
+                               puntaje=puntaje, 
+                               total=len(preguntas_db), 
+                               detalles=resultados_detalle)
 
-@app.route('/nivel_avanzado')
-def nivel_avanzado():
-    return render_template('nivel_avanzado.html')
-
+    return render_template('nivel_basico.html', preguntas=preguntas_db)
 
 @app.route('/conceptos_reforzar')
 def conceptos_reforzar():
-    return render_template('conceptos_reforzar.html')
-
+    try:
+        result = databases.list_documents(
+            database_id=DB_ID,
+            collection_id=COLL_CONCEPTOS
+        )
+        # Convertimos a lista limpia
+        lista_conceptos = []
+        for doc in result['documents']:
+            lista_conceptos.append({
+                "titulo": doc['titulo'],
+                "etiqueta": doc['etiqueta'],
+                "descripcion": doc['descripcion'],
+                "bueno_titulo": doc['ejemplo_bueno_titulo'],
+                "bueno_desc": doc['ejemplo_bueno_desc'],
+                "malo_titulo": doc['ejemplo_malo_titulo'],
+                "malo_desc": doc['ejemplo_malo_desc']
+            })
+            
+        return render_template('conceptos_reforzar.html', conceptos=lista_conceptos)
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Error cargando conceptos."
 
 if __name__ == '__main__':
-    # Ejecuta en modo debug localmente
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=False)

@@ -18,7 +18,10 @@
         --color-text: #1f2a44;
         --color-muted: #6b7a99;
         --color-accent: #3559e0;
-        --color-border: rgba(31, 42, 68, 0.12);
+        --color-accent-soft: rgba(53, 89, 224, 0.12);
+        --color-border: rgba(31, 42, 68, 0.08);
+        --color-success: #10b981;
+        --color-danger: #ef4444;
         font-size: 16px;
       }
 
@@ -29,6 +32,7 @@
           --color-text: #e2e8f0;
           --color-muted: #94a3b8;
           --color-accent: #818cf8;
+          --color-accent-soft: rgba(129, 140, 248, 0.16);
           --color-border: rgba(148, 163, 184, 0.16);
         }
       }
@@ -40,127 +44,181 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
+        font-family: "Montserrat", system-ui, -apple-system, sans-serif;
         background: var(--color-bg);
         color: var(--color-text);
         display: flex;
         flex-direction: column;
+        position: relative;
       }
 
       header {
-        padding: 2.5rem 1.5rem 2rem;
+        padding: 3.5rem 1.5rem 2rem;
         background: linear-gradient(
           120deg,
           rgba(53, 89, 224, 0.85),
           rgba(99, 102, 241, 0.95)
         );
-        color: white;
         text-align: center;
+        color: white;
+        margin-bottom: 0;
+        position: relative;
       }
 
       header h1 {
         margin: 0 0 0.5rem;
         font-size: clamp(2rem, 5vw, 2.6rem);
       }
-
       header p {
         margin: 0 auto;
         max-width: 760px;
         line-height: 1.6;
+        opacity: 0.95;
+      }
+
+      /* --- BOTÓN ESQUINA SUPERIOR DERECHA --- */
+      .btn-corner {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 99px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        backdrop-filter: blur(5px);
+        transition: all 0.2s ease;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-corner:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 600px) {
+        .btn-corner {
+          top: 1rem;
+          right: 1rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+        }
       }
 
       main {
-        width: min(960px, 92vw);
-        margin: 2.5rem auto 3.5rem;
+        width: min(1120px, 92vw);
+        margin: 3rem auto 3rem;
         flex: 1 0 auto;
       }
 
-      .card {
+      /* --- TARJETAS DE CONCEPTOS --- */
+      .concept-list {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .concept-card {
         background: var(--color-card);
         border-radius: 18px;
         border: 1px solid var(--color-border);
-        padding: clamp(1.75rem, 3vw, 2.25rem);
-        box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
       }
 
-      .concept-list {
-        display: grid;
-        gap: 1.75rem;
-      }
-
-      .concept {
-        border: 1px solid var(--color-border);
-        border-radius: 16px;
-        padding: 1.5rem;
-        background: rgba(53, 89, 224, 0.06);
-      }
-
-      .concept h2 {
-        margin: 0 0 0.5rem;
-        font-size: 1.35rem;
-      }
-
-      .tags {
+      .concept-header {
         display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: start;
         margin-bottom: 1rem;
+        gap: 1rem;
+      }
+
+      .concept-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: var(--color-accent);
       }
 
       .tag {
-        background: rgba(53, 89, 224, 0.16);
-        color: var(--color-text);
-        padding: 0.25rem 0.65rem;
-        border-radius: 999px;
+        background: var(--color-accent-soft);
+        color: var(--color-accent);
+        padding: 0.35rem 0.85rem;
+        border-radius: 99px;
         font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
       }
 
-      .examples {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .example {
-        border-left: 4px solid var(--color-accent);
-        border-radius: 12px;
-        padding: 1rem 1.25rem;
-        background: rgba(255, 255, 255, 0.75);
-      }
-
-      .example.bad {
-        border-left-color: #d946ef;
-        background: rgba(217, 70, 239, 0.12);
-      }
-
-      .example h3 {
-        margin: 0 0 0.35rem;
+      .description {
         font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
       }
 
+      /* --- GRILLA DE EJEMPLOS --- */
+      .examples-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .example-box {
+        padding: 1.25rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .example-good {
+        background: rgba(16, 185, 129, 0.08);
+        border-left: 4px solid var(--color-success);
+      }
+
+      .example-bad {
+        background: rgba(239, 68, 68, 0.08);
+        border-left: 4px solid var(--color-danger);
+      }
+
+      .example-title {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+
+      .text-good {
+        color: #059669;
+      }
+      .text-bad {
+        color: #dc2626;
+      }
+
+      /* --- BOTONES INFERIORES --- */
       .actions {
-        margin-top: 2.5rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+        margin-top: 3rem;
+        text-align: center;
       }
 
       .btn {
+        display: inline-block;
+        text-decoration: none;
         border: none;
         border-radius: 999px;
-        padding: 0.85rem 1.75rem;
+        padding: 0.85rem 2rem;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .btn.primary {
-        background: var(--color-accent);
-        color: white;
-        box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
       }
 
       .btn.secondary {
@@ -170,144 +228,73 @@
       }
 
       .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
 
       footer {
-        padding: 2rem 1.5rem;
+        padding: 2rem;
         text-align: center;
         color: var(--color-muted);
         font-size: 0.9rem;
       }
 
-      @media (max-width: 720px) {
-        .card {
-          padding: 1.5rem;
+      @media (max-width: 768px) {
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+        .concept-header {
+          flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
+    <a href="/" class="btn-corner"> <span>&#8617;</span> Inicio </a>
+
     <header>
-      <h1>Conceptos a reforzar</h1>
+      <h1>Conceptos a Reforzar</h1>
       <p>
-        Profundiza en los temas detectados como prioritarios. Cada ejemplo cita
-        experiencias reales para facilitar la comprensión.
+        Profundiza en las ideas que moldean nuestro mundo. Analizamos la
+        historia imparcialmente: qué logros trajeron estas ideas y qué desastres
+        causaron cuando se llevaron al extremo.
       </p>
     </header>
 
     <main>
-      <section class="card" aria-labelledby="conceptos-refuerzo">
-        <div class="concept-list" id="conceptos-refuerzo">
-          <article class="concept">
-            <h2>Democracia participativa</h2>
-            <div class="tags">
-              <span class="tag">Ciudadanía</span>
-              <span class="tag">Nivel básico</span>
-            </div>
-            <p>
-              La participación directa fortalece la legitimidad de las
-              decisiones públicas y mejora la confianza entre la ciudadanía y
-              sus representantes.
-            </p>
-            <div class="examples">
-              <div class="example">
-                <h3>Bien aplicado</h3>
-                <p>
-                  El presupuesto participativo de Porto Alegre (Brasil),
-                  iniciado en 1989, permitió que las y los vecinos definan
-                  proyectos prioritarios de infraestructura barrial con
-                  deliberaciones abiertas.
-                </p>
-              </div>
-              <div class="example bad">
-                <h3>Mal aplicado</h3>
-                <p>
-                  La aprobación de la Ley de Seguridad Nacional en Hong Kong
-                  (2020) se realizó sin consulta pública amplia, lo que generó
-                  protestas masivas y denuncias de falta de participación
-                  ciudadana.
-                </p>
-              </div>
-            </div>
-          </article>
+      <div class="concept-list">
+        {% for item in conceptos %}
+        <article class="concept-card">
+          <div class="concept-header">
+            <h2>{{ item.titulo }}</h2>
+            <span class="tag">{{ item.etiqueta }}</span>
+          </div>
 
-          <article class="concept">
-            <h2>Uso de indicadores económicos</h2>
-            <div class="tags">
-              <span class="tag">Economía</span>
-              <span class="tag">Nivel intermedio</span>
-            </div>
-            <p>
-              Medir variables como inflación, empleo y distribución del ingreso
-              permite evaluar el efecto real de las políticas públicas sobre la
-              vida cotidiana.
-            </p>
-            <div class="examples">
-              <div class="example">
-                <h3>Bien aplicado</h3>
-                <p>
-                  La Oficina de Estadísticas Laborales de Estados Unidos publica
-                  el Índice de Precios al Consumidor (CPI), que el Congreso
-                  utilizó en 2021 para ajustar beneficios como el Seguro Social
-                  frente al aumento del costo de vida.
-                </p>
-              </div>
-              <div class="example bad">
-                <h3>Mal aplicado</h3>
-                <p>
-                  Durante la campaña del referéndum del Brexit (Reino Unido,
-                  2016) se difundió en un autobús la afirmación de que se
-                  enviarían £350 millones semanales a la Unión Europea, sin
-                  respaldo en los datos presupuestarios reales.
-                </p>
-              </div>
-            </div>
-          </article>
+          <p class="description">{{ item.descripcion }}</p>
 
-          <article class="concept">
-            <h2>Verificación de información</h2>
-            <div class="tags">
-              <span class="tag">Pensamiento crítico</span>
-              <span class="tag">Nivel avanzado</span>
+          <div class="examples-grid">
+            <div class="example-box example-good">
+              <span class="example-title text-good"
+                >{{ item.bueno_titulo }}</span
+              >
+              <p style="margin: 0">{{ item.bueno_desc }}</p>
             </div>
-            <p>
-              Contrastar datos con fuentes confiables ayuda a frenar la
-              desinformación y a sostener debates públicos basados en
-              evidencias.
-            </p>
-            <div class="examples">
-              <div class="example">
-                <h3>Bien aplicado</h3>
-                <p>
-                  En 2022 la Red Internacional de Verificadores de Datos (IFCN)
-                  coordinó verificaciones conjuntas sobre noticias falsas
-                  relacionadas con la invasión rusa a Ucrania, ofreciendo
-                  enlaces a fuentes oficiales y expertos.
-                </p>
-              </div>
-              <div class="example bad">
-                <h3>Mal aplicado</h3>
-                <p>
-                  La propagación de teorías conspirativas sobre vacunas a través
-                  de videos virales en YouTube durante 2020 ignoró estudios
-                  científicos revisados por pares, provocando decisiones basadas
-                  en información falsa.
-                </p>
-              </div>
-            </div>
-          </article>
-        </div>
 
-        <div class="actions">
-          <a class="btn secondary" href="/">Volver al inicio</a>
-        </div>
-      </section>
+            <div class="example-box example-bad">
+              <span class="example-title text-bad">{{ item.malo_titulo }}</span>
+              <p style="margin: 0">{{ item.malo_desc }}</p>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="actions">
+        <a href="/" class="btn secondary">Volver al inicio</a>
+      </div>
     </main>
 
     <footer>© <span id="year"></span> Votar con Conocimiento.</footer>
-
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

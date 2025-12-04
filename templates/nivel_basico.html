@@ -187,113 +187,67 @@
     </header>
 
     <main>
-      <section class="card" aria-labelledby="preguntas-basico">
-        <div class="question-list" id="preguntas-basico">
-          <article class="question">
-            <h2>1. Sufragio universal</h2>
-            <p>
-              En Argentina, desde 1912 la Ley Sáenz Peña estableció el voto
-              secreto, universal y obligatorio para varones. ¿Qué principio
-              democrático se consolida cuando en 1947 la Ley 13.010 extendió
-              este derecho a las mujeres?
-            </p>
-            <div class="choices">
-              <label class="choice">
-                <input type="radio" name="q1" value="a" />
-                <span
-                  >La igualdad política, porque amplía la participación
-                  ciudadana sin discriminación de género.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q1" value="b" />
-                <span
-                  >La eficiencia del Estado, ya que reduce el costo de las
-                  elecciones.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q1" value="c" />
-                <span
-                  >La delegación de responsabilidades solo en representantes
-                  masculinos.</span
-                >
-              </label>
-            </div>
-          </article>
-
-          <article class="question">
-            <h2>2. Separación de poderes</h2>
-            <p>
-              En 2001 la Corte Suprema de Justicia argentina declaró
-              inconstitucional una ley del Congreso. ¿Qué función democrática
-              cumple el Poder Judicial en este caso?
-            </p>
-            <div class="choices">
-              <label class="choice">
-                <input type="radio" name="q2" value="a" />
-                <span
-                  >Controlar que las leyes respeten la Constitución y los
-                  derechos de la ciudadanía.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q2" value="b" />
-                <span
-                  >Reemplazar a los legisladores en la redacción de nuevas
-                  leyes.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q2" value="c" />
-                <span
-                  >Promover campañas electorales para los partidos
-                  políticos.</span
-                >
-              </label>
-            </div>
-          </article>
-
-          <article class="question">
-            <h2>3. Participación ciudadana</h2>
-            <p>
-              En Montevideo, Uruguay, existe desde 1990 un sistema de
-              presupuesto participativo donde los vecinos votan proyectos
-              barriales. ¿Cuál es el beneficio principal de este mecanismo?
-            </p>
-            <div class="choices">
-              <label class="choice">
-                <input type="radio" name="q3" value="a" />
-                <span
-                  >La comunidad decide en qué se invierten los recursos y
-                  fortalece la transparencia.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q3" value="b" />
-                <span
-                  >Las autoridades ya no tienen que rendir cuentas por el dinero
-                  público.</span
-                >
-              </label>
-              <label class="choice">
-                <input type="radio" name="q3" value="c" />
-                <span
-                  >Los proyectos se eligen solo por sorteo sin explicar los
-                  criterios.</span
-                >
-              </label>
-            </div>
-          </article>
-        </div>
-
-        <div class="actions">
-          <button class="btn primary" type="button">Evaluar respuestas</button>
-          <a class="btn secondary" href="/">Cambiar nivel</a>
-          <a class="btn secondary" href="/conceptos_reforzar"
-            >Ver conceptos a reforzar</a
+      <section class="card">
+        <!-- El formulario empieza aquí -->
+        <form action="/nivel_basico" method="POST">
+          <!-- BLOQUE DE APODO -->
+          <div
+            style="
+              margin-bottom: 2rem;
+              padding: 1.5rem;
+              background: rgba(53, 89, 224, 0.1);
+              border-radius: 12px;
+              border: 1px solid var(--color-accent);
+            "
           >
-        </div>
+            <h3 style="margin-top: 0">Antes de empezar</h3>
+            <label
+              for="nickname"
+              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
+              >Elige un apodo para ver tu resultado:</label
+            >
+            <input
+              type="text"
+              id="nickname"
+              name="nickname"
+              placeholder="Ej: Ciudadano123"
+              required
+              style="
+                width: 100%;
+                padding: 0.8rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                font-size: 1rem;
+              "
+            />
+          </div>
+
+          <div class="question-list">
+            <!-- Aquí va el bucle de preguntas de Jinja2 -->
+            {% for item in preguntas %}
+            <article class="question">
+              <h2>{{ loop.index }}. {{ item.pregunta }}</h2>
+              <div class="choices">
+                {% for opcion in item.opciones %}
+                <label class="choice">
+                  <input
+                    type="radio"
+                    name="{{ item.id }}"
+                    value="{{ opcion }}"
+                    required
+                  />
+                  <span>{{ opcion }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" type="submit">Enviar Respuestas</button>
+          </div>
+        </form>
       </section>
     </main>
 
