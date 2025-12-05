@@ -90,7 +90,7 @@ def nivel_basico():
             print(f"Error guardando puntaje: {e}")
 
         # 4. Ir a la pantalla de resultados (usamos 'resultado.html' singular)
-        return render_template('resultado.html', 
+        return render_template('resultados.html', 
                                nivel="Nivel Básico",
                                nickname=nickname,
                                puntaje=puntaje, 
