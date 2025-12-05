@@ -3,240 +3,163 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nivel básico · Votar con Conocimiento</title>
+    <title>Nivel Básico · Votar con Conocimiento</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='image.png') }}"
+      type="image/png"
+    />
+    <!-- 1. Importamos la fuente Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- 2. Importamos Tailwind CSS (¡Magia aquí!) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 3. Configuración rápida para tus colores verdes y fuente -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+            },
+            colors: {
+              // Aquí definimos tus verdes personalizados
+              emerald: {
+                50: "#ecfdf5", // Fondo muy claro
+                100: "#d1fae5",
+                500: "#10b981", // Tu color principal
+                600: "#059669", // Verde más oscuro para hover
+                900: "#064e3b", // Texto oscuro
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Pequeño estilo extra solo para la animación de entrada -->
     <style>
-      :root {
-        color-scheme: light dark;
-        --color-bg: #f4f6fb;
-        --color-card: #ffffff;
-        --color-text: #1f2a44;
-        --color-muted: #6b7a99;
-        --color-accent: #3559e0;
-        --color-border: rgba(31, 42, 68, 0.12);
-        font-size: 16px;
+      .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(20px);
       }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --color-bg: #0f172a;
-          --color-card: #141f35;
-          --color-text: #e2e8f0;
-          --color-muted: #94a3b8;
-          --color-accent: #818cf8;
-          --color-border: rgba(148, 163, 184, 0.16);
-        }
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background: var(--color-bg);
-        color: var(--color-text);
-        display: flex;
-        flex-direction: column;
-      }
-
-      header {
-        padding: 2.5rem 1.5rem 2rem;
-        background: linear-gradient(
-          120deg,
-          rgba(53, 89, 224, 0.85),
-          rgba(99, 102, 241, 0.95)
-        );
-        color: white;
-        text-align: center;
-      }
-
-      header h1 {
-        margin: 0 0 0.5rem;
-        font-size: clamp(2rem, 5vw, 2.6rem);
-      }
-
-      header p {
-        margin: 0 auto;
-        max-width: 680px;
-        line-height: 1.6;
-      }
-
-      main {
-        width: min(960px, 92vw);
-        margin: 2.5rem auto 3rem;
-        flex: 1 0 auto;
-      }
-
-      .card {
-        background: var(--color-card);
-        border-radius: 18px;
-        border: 1px solid var(--color-border);
-        padding: clamp(1.75rem, 3vw, 2.25rem);
-        box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
-      }
-
-      .question-list {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .question {
-        padding: 1.5rem;
-        border-radius: 16px;
-        border: 1px solid var(--color-border);
-        background: rgba(53, 89, 224, 0.04);
-      }
-
-      .question h2 {
-        margin: 0 0 0.75rem;
-        font-size: 1.3rem;
-      }
-
-      .choices {
-        display: grid;
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      label.choice {
-        display: flex;
-        gap: 0.75rem;
-        align-items: flex-start;
-        padding: 0.9rem 1rem;
-        border-radius: 12px;
-        border: 1px solid transparent;
-        background: rgba(53, 89, 224, 0.08);
-        cursor: pointer;
-        transition: border-color 0.2s ease, background-color 0.2s ease;
-      }
-
-      label.choice:hover {
-        border-color: rgba(53, 89, 224, 0.35);
-        background: rgba(53, 89, 224, 0.16);
-      }
-
-      label.choice input {
-        margin-top: 0.2rem;
-        accent-color: var(--color-accent);
-      }
-
-      .actions {
-        margin-top: 2.5rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      .btn {
-        border: none;
-        border-radius: 999px;
-        padding: 0.85rem 1.75rem;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .btn.primary {
-        background: var(--color-accent);
-        color: white;
-        box-shadow: 0 18px 32px rgba(53, 89, 224, 0.35);
-      }
-
-      .btn.secondary {
-        background: transparent;
-        border: 1px solid var(--color-border);
-        color: var(--color-text);
-      }
-
-      .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-      }
-
-      footer {
-        padding: 2rem 1.5rem;
-        text-align: center;
-        color: var(--color-muted);
-        font-size: 0.9rem;
-      }
-
-      @media (max-width: 720px) {
-        .card {
-          padding: 1.5rem;
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     </style>
   </head>
-  <body>
-    <header>
-      <h1>Nivel básico</h1>
-      <p>
+
+  <!-- Agregamos 'bg-slate-50' (fondo gris casi blanco) y la animación 'fade-in' -->
+  <body
+    class="bg-slate-50 text-slate-800 min-h-screen flex flex-col fade-in font-sans"
+  >
+    <!-- Botón Volver (Esquina Superior) -->
+    <!-- absolute = posición absoluta, top-4 right-4 = ubicación, backdrop-blur = efecto vidrio -->
+    <a
+      href="/"
+      class="absolute top-6 right-6 bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-md px-4 py-2 rounded-full font-semibold transition transform hover:-translate-y-1 z-20 text-sm flex items-center gap-2"
+    >
+      <span>&#8617;</span> Inicio
+    </a>
+
+    <!-- HEADER -->
+    <!-- bg-gradient-to-br = degradado, from-emerald-500 = color inicio, shadow-lg = sombra -->
+    <header
+      class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white py-12 px-6 text-center shadow-lg relative overflow-hidden"
+    >
+      <h1 class="text-3xl md:text-5xl font-bold mb-3 relative z-10">
+        Nivel Básico
+      </h1>
+      <p
+        class="text-emerald-50 max-w-2xl mx-auto text-lg leading-relaxed relative z-10"
+      >
         Refuerza los fundamentos de la ciudadanía: democracia, derechos y
         participación cotidiana.
       </p>
+      <!-- Decoración de fondo (círculos sutiles) -->
+      <div
+        class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
+      >
+        <div
+          class="absolute -top-10 -left-10 w-40 h-40 bg-white rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 w-60 h-60 bg-white rounded-full blur-3xl"
+        ></div>
+      </div>
     </header>
 
-    <main>
-      <section class="card">
-        <!-- El formulario empieza aquí -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-10">
+      <!-- TARJETA PRINCIPAL -->
+      <!-- bg-white = fondo blanco, rounded-2xl = bordes muy redondeados, shadow-xl = sombra grande -->
+      <section
+        class="bg-white rounded-2xl shadow-xl border border-emerald-100 p-6 md:p-10"
+      >
         <form action="/nivel_basico" method="POST">
-          <!-- BLOQUE DE APODO -->
+          <!-- SECCIÓN DE APODO -->
+          <!-- bg-emerald-50 = fondo verde muy claro -->
           <div
-            style="
-              margin-bottom: 2rem;
-              padding: 1.5rem;
-              background: rgba(53, 89, 224, 0.1);
-              border-radius: 12px;
-              border: 1px solid var(--color-accent);
-            "
+            class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-8"
           >
-            <h3 style="margin-top: 0">Antes de empezar</h3>
+            <h3
+              class="text-emerald-800 text-lg font-bold mb-3 flex items-center gap-2"
+            >
+              👋 Antes de empezar
+            </h3>
             <label
               for="nickname"
-              style="display: block; margin-bottom: 0.5rem; font-weight: 600"
-              >Elige un apodo para ver tu resultado:</label
+              class="block text-sm font-semibold text-emerald-900 mb-2"
             >
+              Elige un apodo para ver tu resultado:
+            </label>
+            <!-- focus:ring-emerald-500 = al hacer click se ilumina verde -->
             <input
               type="text"
               id="nickname"
               name="nickname"
               placeholder="Ej: Ciudadano123"
               required
-              style="
-                width: 100%;
-                padding: 0.8rem;
-                border-radius: 8px;
-                border: 1px solid #ccc;
-                font-size: 1rem;
-              "
+              class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
 
-          <div class="question-list">
-            <!-- Aquí va el bucle de preguntas de Jinja2 -->
+          <!-- LISTA DE PREGUNTAS -->
+          <div class="space-y-8">
             {% for item in preguntas %}
-            <article class="question">
-              <h2>{{ loop.index }}. {{ item.pregunta }}</h2>
-              <div class="choices">
+            <article
+              class="p-6 rounded-xl border border-gray-100 bg-slate-50 hover:shadow-md transition duration-300"
+            >
+              <h2 class="text-xl font-bold text-slate-800 mb-4">
+                <span class="text-emerald-500 mr-2">{{ loop.index }}.</span> {{
+                item.pregunta }}
+              </h2>
+
+              <div class="grid gap-3">
                 {% for opcion in item.opciones %}
-                <label class="choice">
+                <label
+                  class="flex items-start gap-3 p-4 rounded-lg bg-white border border-gray-200 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50 transition group"
+                >
                   <input
                     type="radio"
                     name="{{ item.id }}"
                     value="{{ opcion }}"
                     required
+                    class="mt-1 w-5 h-5 text-emerald-600 focus:ring-emerald-500 border-gray-300"
                   />
-                  <span>{{ opcion }}</span>
+                  <span
+                    class="text-slate-700 group-hover:text-emerald-900 font-medium"
+                    >{{ opcion }}</span
+                  >
                 </label>
                 {% endfor %}
               </div>
@@ -244,14 +167,22 @@
             {% endfor %}
           </div>
 
-          <div class="actions">
-            <button class="btn primary" type="submit">Enviar Respuestas</button>
+          <!-- BOTÓN DE ENVIAR -->
+          <div class="mt-10 text-center">
+            <button
+              type="submit"
+              class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-emerald-500/30 transform transition hover:-translate-y-1 hover:scale-105 active:scale-95 text-lg"
+            >
+              Enviar Respuestas 🚀
+            </button>
           </div>
         </form>
       </section>
     </main>
 
-    <footer>© <span id="year"></span> Votar con Conocimiento.</footer>
+    <footer class="text-center py-8 text-slate-400 text-sm">
+      © <span id="year"></span> Votar con Conocimiento.
+    </footer>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();

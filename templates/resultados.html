@@ -5,240 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resultados · Votar con Conocimiento</title>
     <link
+      rel="icon"
+      href="{{ url_for('static', filename='image.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      :root {
-        --color-bg: #f4f6fb;
-        --color-card: #ffffff;
-        --color-text: #1f2a44;
-        --color-accent: #3559e0;
-        --color-success: #10b981;
-        --color-error: #ef4444;
-        --color-border: rgba(31, 42, 68, 0.12);
-      }
-
-      body {
-        margin: 0;
-        font-family: "Montserrat", sans-serif;
-        background: var(--color-bg);
-        color: var(--color-text);
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-
-      header {
-        background: linear-gradient(
-          120deg,
-          rgba(53, 89, 224, 0.9),
-          rgba(99, 102, 241, 0.95)
-        );
-        color: white;
-        padding: 2rem;
-        text-align: center;
-      }
-
-      main {
-        width: min(800px, 92vw);
-        margin: -2rem auto 3rem;
-        flex: 1;
-      }
-
-      .score-card {
-        background: white;
-        padding: 2.5rem;
-        border-radius: 18px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-      }
-
-      .score-number {
-        font-size: 3.5rem;
-        font-weight: 700;
-        color: var(--color-accent);
-        margin: 1rem 0;
-      }
-
-      .feedback-text {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-      }
-
-      .details-list {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .result-item {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid var(--color-border);
-        border-left: 5px solid var(--color-border);
-      }
-
-      .result-item.correct {
-        border-left-color: var(--color-success);
-      }
-
-      .result-item.incorrect {
-        border-left-color: var(--color-error);
-      }
-
-      .status-badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 99px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-
-      .status-badge.correct {
-        background: #d1fae5;
-        color: #065f46;
-      }
-      .status-badge.incorrect {
-        background: #fee2e2;
-        color: #991b1b;
-      }
-
-      .user-answer {
-        margin-top: 0.5rem;
-        font-weight: 600;
-      }
-
-      .correct-answer {
-        margin-top: 0.5rem;
-        color: var(--color-success);
-        font-size: 0.95rem;
-      }
-
-      .btn {
-        display: inline-block;
-        background: var(--color-accent);
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 99px;
-        text-decoration: none;
-        font-weight: 600;
-        margin-top: 1rem;
-        transition: transform 0.2s;
-      }
-      .btn:hover {
-        transform: translateY(-2px);
-      }
-
-      footer {
-        text-align: center;
-        padding: 2rem;
-        color: #6b7a99;
-      }
-    </style>
   </head>
   <body>
     <header>
-      <h1>Resultados del Examen</h1>
-      <p>Votar con Conocimiento</p>
+      <h1>Resultados</h1>
+      <p>Tu desempeño en la prueba de conocimiento cívico</p>
     </header>
 
     <main>
-      <!-- TARJETA DE PUNTUACIÓN -->
-      <div class="score-card">
+      <!-- Animación 'pop-in' agregada aquí -->
+      <div class="score-card pop-in">
         <h2>¡Hola, {{ nickname }}!</h2>
-        <p>Has completado el {{ nivel }}.</p>
+        <p style="color: var(--color-muted)">Has completado el {{ nivel }}.</p>
 
-        <div class="score-number">{{ puntaje }} / {{ total }}</div>
+        <div class="score-circle">{{ puntaje }} / {{ total }}</div>
 
-        <div class="feedback-text">
+        <div style="margin-bottom: 2rem">
           {% if puntaje == total %}
-          <span style="color: var(--color-success)"
-            >¡Excelente! Dominas los conceptos a la perfección.</span
-          >
+          <h3 style="color: var(--color-success)">
+            ¡Excelente! Dominas los conceptos a la perfección.
+          </h3>
           {% elif puntaje > total / 2 %}
-          <span style="color: #d97706"
-            >¡Buen trabajo! Tienes una buena base, pero hay detalles por
-            pulir.</span
-          >
+          <h3 style="color: var(--color-warning)">
+            ¡Buen trabajo! Pero hay detalles por pulir.
+          </h3>
           {% else %}
-          <span style="color: var(--color-error)"
-            >Te recomendamos repasar los conceptos básicos antes de votar.</span
-          >
+          <h3 style="color: var(--color-danger)">
+            Te recomendamos repasar antes de votar.
+          </h3>
           {% endif %}
-          <div
-            style="
-              margin-top: 2rem;
-              display: flex;
-              flex-direction: column;
-              gap: 1rem;
-              align-items: center;
-            "
+        </div>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+          "
+        >
+          <a href="/conceptos_reforzar" class="btn primary"
+            >💡 Ver conceptos a reforzar</a
           >
-            <!-- Botón Principal: Ver conceptos -->
-            <a
-              href="/conceptos_reforzar"
-              class="btn"
-              style="width: 100%; max-width: 300px; text-align: center"
-            >
-              💡 Ver conceptos a reforzar
-            </a>
 
-            <div style="display: flex; gap: 1rem">
-              <a
-                href="/"
-                class="btn"
-                style="
-                  background: transparent;
-                  color: var(--color-muted);
-                  padding: 0.5rem 1rem;
-                  font-size: 0.9rem;
-                "
-              >
-                Volver al Inicio
-              </a>
-              <a
-                href="/nivel_basico"
-                class="btn"
-                style="
-                  background: transparent;
-                  color: var(--color-accent);
-                  border: 1px solid var(--color-accent);
-                  padding: 0.5rem 1rem;
-                  font-size: 0.9rem;
-                "
-              >
-                Intentar de nuevo
-              </a>
-            </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem">
+            <a href="/" class="btn secondary">Inicio</a>
+            <!-- Ajusta el href según de qué nivel venga, o manda al inicio -->
+            <a href="/nivel_basico" class="btn secondary">Intentar de nuevo</a>
           </div>
+        </div>
+      </div>
 
-      <!-- LISTA DETALLADA -->
-      <h3 style="margin-bottom: 1rem">Detalle de tus respuestas:</h3>
+      <h3 style="text-align: center; margin-top: 3rem">
+        Detalle de tus respuestas:
+      </h3>
 
-      <div class="details-list">
+      <div class="fade-in" style="animation-delay: 0.5s">
+        <!-- Retraso para que aparezca después del puntaje -->
         {% for res in detalles %}
         <div
           class="result-item {{ 'correct' if res.es_correcta else 'incorrect' }}"
         >
-          {% if res.es_correcta %}
-          <span class="status-badge correct">Correcta</span>
-          {% else %}
-          <span class="status-badge incorrect">Incorrecta</span>
-          {% endif %}
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 0.5rem;
+            "
+          >
+            <span
+              class="status-badge {{ 'correct' if res.es_correcta else 'incorrect' }}"
+            >
+              {{ 'Correcta' if res.es_correcta else 'Incorrecta' }}
+            </span>
+          </div>
 
-          <h4 style="margin: 0.5rem 0">{{ res.pregunta }}</h4>
+          <h4 style="margin: 0.5rem 0 1rem">{{ res.pregunta }}</h4>
 
-          <div class="user-answer">
-            Tu respuesta:
-            <span style="font-weight: normal">{{ res.dada }}</span>
+          <div style="margin-bottom: 0.5rem">
+            Tu respuesta: <span style="font-weight: 600">{{ res.dada }}</span>
           </div>
 
           {% if not res.es_correcta %}
-          <div class="correct-answer">
-            <strong>Respuesta correcta:</strong> {{ res.correcta }}
+          <div style="color: var(--color-success); font-weight: 600">
+            Respuesta correcta: {{ res.correcta }}
           </div>
           {% endif %}
         </div>
