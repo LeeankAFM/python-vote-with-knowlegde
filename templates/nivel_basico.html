@@ -59,21 +59,16 @@
     </style>
   </head>
 
-  <!-- Agregamos 'bg-slate-50' (fondo gris casi blanco) y la animación 'fade-in' -->
   <body
     class="bg-slate-50 text-slate-800 min-h-screen flex flex-col fade-in font-sans"
   >
-    <!-- Botón Volver (Esquina Superior) -->
-    <!-- absolute = posición absoluta, top-4 right-4 = ubicación, backdrop-blur = efecto vidrio -->
     <a
       href="/"
-      class="absolute top-6 right-6 bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-md px-4 py-2 rounded-full font-semibold transition transform hover:-translate-y-1 z-20 text-sm flex items-center gap-2"
+      class="absolute top-6 left-6 bg-white/20 hover:bg-white/30 text-white border border-white/40 backdrop-blur-md px-4 py-2 rounded-full font-semibold transition transform hover:-translate-y-1 z-20 text-sm flex items-center gap-2"
     >
       <span>&#8617;</span> Inicio
     </a>
 
-    <!-- HEADER -->
-    <!-- bg-gradient-to-br = degradado, from-emerald-500 = color inicio, shadow-lg = sombra -->
     <header
       class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white py-12 px-6 text-center shadow-lg relative overflow-hidden"
     >
@@ -86,7 +81,6 @@
         Refuerza los fundamentos de la ciudadanía: democracia, derechos y
         participación cotidiana.
       </p>
-      <!-- Decoración de fondo (círculos sutiles) -->
       <div
         class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
       >
@@ -100,14 +94,11 @@
     </header>
 
     <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-10">
-      <!-- TARJETA PRINCIPAL -->
-      <!-- bg-white = fondo blanco, rounded-2xl = bordes muy redondeados, shadow-xl = sombra grande -->
       <section
         class="bg-white rounded-2xl shadow-xl border border-emerald-100 p-6 md:p-10"
       >
         <form action="/nivel_basico" method="POST">
           <!-- SECCIÓN DE APODO -->
-          <!-- bg-emerald-50 = fondo verde muy claro -->
           <div
             class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-8"
           >
@@ -122,7 +113,6 @@
             >
               Elige un apodo para ver tu resultado:
             </label>
-            <!-- focus:ring-emerald-500 = al hacer click se ilumina verde -->
             <input
               type="text"
               id="nickname"

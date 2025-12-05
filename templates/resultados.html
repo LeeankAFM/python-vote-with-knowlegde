@@ -25,7 +25,6 @@
     </header>
 
     <main>
-      <!-- Animación 'pop-in' agregada aquí -->
       <div class="score-card pop-in">
         <h2>¡Hola, {{ nickname }}!</h2>
         <p style="color: var(--color-muted)">Has completado el {{ nivel }}.</p>
@@ -62,7 +61,6 @@
 
           <div style="display: flex; gap: 1rem; margin-top: 1rem">
             <a href="/" class="btn secondary">Inicio</a>
-            <!-- Ajusta el href según de qué nivel venga, o manda al inicio -->
             <a href="/nivel_basico" class="btn secondary">Intentar de nuevo</a>
           </div>
         </div>
@@ -73,7 +71,6 @@
       </h3>
 
       <div class="fade-in" style="animation-delay: 0.5s">
-        <!-- Retraso para que aparezca después del puntaje -->
         {% for res in detalles %}
         <div
           class="result-item {{ 'correct' if res.es_correcta else 'incorrect' }}"
